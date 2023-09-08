@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502285701900",
+    "project_id": "oylproject-1c83b",
+    "storage_bucket": "oylproject-1c83b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502285701900:android:fd1cbe6d4643095d84af29",
+        "android_client_info": {
+          "package_name": "com.oylproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502285701900-kvgebecojdrbb26cbarhbfvrn6a1aj0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgeCXrIzNlGsT0uYPGqIY3wivfyrfSE_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502285701900-kvgebecojdrbb26cbarhbfvrn6a1aj0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
