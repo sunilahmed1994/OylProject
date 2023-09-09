@@ -90,7 +90,7 @@ const PriceAndPaymentScreen = ({ route, navigation }) => {
                     <CardPicHolder style={[appStyles.cardPicContainer,appStyles.marginright1]} toggleImagePress={handleStripePress} source={affirmpay}/>
                     <CardPicHolder style={[appStyles.cardPicContainer,appStyles.marginright1]} toggleImagePress={handleStripePress} source={klarnapay}/>
                 </View>
-                <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} paymentModal={true} backdropOpacity={0.7} transparent={false}/>
+                <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} paymentModal={true} backdropOpacity={0.7} transparent={true}/>
 
             </View>
             

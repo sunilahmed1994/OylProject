@@ -207,7 +207,7 @@ const HomeScreen = ({ navigation }) => {
             value='Please enter your address'
             onChangeText={null}
           />
-          {location && <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} locationModal={true} backdropOpacity={0.7} transparent={true} />}
+          {location && <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} locationModal={true}  transparent={true} />}
         </View>
         <View >
           <CustomInput
@@ -220,7 +220,7 @@ const HomeScreen = ({ navigation }) => {
             value='Please select oil type from here                                (All Oil High Quality Synthetic) '
             onChangeText={null}
           />
-          {oil && <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} oilModal={true} locationModal={false} backdropOpacity={0.7} transparent={true} oilOption={oilOption} />}
+          {oil && <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} oilModal={true} locationModal={false} transparent={true} oilOption={oilOption} />}
         </View>
         <View style={appStyles.touchableButtonContainer}>
           <CustomButton text="Lock it in!" onPress={handleButtonPress} gradientWhite={true} styletouchableContainer={appStyles.touchableButton} styleGradientContainer={appStyles.gradientContainer} />
