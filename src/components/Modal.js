@@ -8,7 +8,22 @@ import { LocationIcon, DownIcon, TickIcon, Payment } from '../services/utilities
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { AuthContext } from '../../src/navigation/authProvider';
 
-const AccountModal = ({ isVisible, closeModal, navigation, option, tickImage, vehicleAdded = "", transparent, accountScreenActive, locationModal = false, oilModal = false, paymentModal = false, oilOption }) => {
+const AccountModal = ({ 
+  isVisible, 
+  closeModal, 
+  navigation, 
+  option, 
+  tickImage, 
+  vehicleAdded = "", 
+  transparent, 
+  accountScreenActive, 
+  locationModal = false, 
+  oilModal = false, 
+  paymentModal = false, 
+  oilOption, 
+  onLocationSubmit,
+  onOilOptionSelect,
+}) => {
   const iconDown = DownIcon.downIcon;
   const tickimage = TickIcon.tickIcon;
   const locationModalIcon = LocationIcon.locationIcon;
@@ -48,8 +63,10 @@ const AccountModal = ({ isVisible, closeModal, navigation, option, tickImage, ve
   }
   const handleSubmitLocationButtonPress = () => {
     console.log("Sent ");
-    setLocationModalShow(true)
+    setLocationModalShow(true);
+    onLocationSubmit(locationValue);
     closeModal();
+    
 
   }
   const handleSaveButtonPress = () => {
@@ -91,25 +108,33 @@ const AccountModal = ({ isVisible, closeModal, navigation, option, tickImage, ve
     // Add more conditions as needed
   };
   const handleOilOptionPress = (id) => {
-    if (id === '1') {
-      // Perform action for Option 1
-      closeModal();
-    } else if (id === '2') {
-
-      // Perform action for Option 2
-      closeModal();
-    } else if (id === '3') {
-      closeModal();
-      // Perform action for Option 3
-    } else if (id === '4') {
-      closeModal();
-      // Perform action for Option 3
-    } else if (id === '5') {
-      // Perform action for Option 3
-      closeModal();
+    const selectedOption = oilOption.find((option) => option.id === id);
+    if (selectedOption) {
+      onOilOptionSelect(selectedOption.text);
     }
-    // Add more conditions as needed
+    closeModal();
   };
+  // const handleOilOptionPress = (id) => {
+  //   if (id === '1') {
+  //     // Perform action for Option 1
+  //     console.log(id.text)
+  //     closeModal();
+  //   } else if (id === '2') {
+
+  //     // Perform action for Option 2
+  //     closeModal();
+  //   } else if (id === '3') {
+  //     closeModal();
+  //     // Perform action for Option 3
+  //   } else if (id === '4') {
+  //     closeModal();
+  //     // Perform action for Option 3
+  //   } else if (id === '5') {
+  //     // Perform action for Option 3
+  //     closeModal();
+  //   }
+  //   // Add more conditions as needed
+  // };
 
   const renderItem = ({ item }) => (
 

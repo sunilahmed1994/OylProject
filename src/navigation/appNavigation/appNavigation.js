@@ -11,6 +11,7 @@ import TermsPrivacyScreen from '../../screens/appFlow/TermsPrivacyScreen';
 import VehicleInfoScreen from '../../screens/appFlow/VehicleInfoScreen';
 import PriceAndPaymentScreen from '../../screens/appFlow/PriceAndPaymentScreen';
 import { AccountBlack, HomeBlack } from '../../services/utilities/assets/assets';
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 
 const Stack = createNativeStackNavigator();
@@ -21,11 +22,12 @@ function BottomTab() {
   return (
     // <>
     <Tab.Navigator initialRouteName="HomeScreen">
-      <Tab.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown:false,
+      <Tab.Screen name="HomeScreen" component={HomeScreen} 
+        options={{ headerShown:false,
         tabBarLabel:'Home',
-         tabBarIcon:({color,size})=>{
-           <Image source={HomeBlack.homeBlack} />
-         }
+         tabBarIcon:({color,size})=>(
+           <Image source={HomeBlack.homeBlack} style={{ tintColor: 'black', width: responsiveWidth(6), height: responsiveHeight(4) }}/>
+         )
         }}/>
 
       <Tab.Screen name="AccountScreen" component={AccountScreen} 
@@ -33,9 +35,9 @@ function BottomTab() {
         
         headerShown:false,
         tabBarLabel:'Account',
-        tabBarIcon:({color,size})=>{
-          <Image source={AccountBlack.accountBlack} />
-        }
+        tabBarIcon:({color,size})=>(
+          <Image source={AccountBlack.accountBlack} style={{ tintColor: 'black', width: responsiveWidth(6), height: responsiveHeight(4) }}/>
+        )
         }} 
         // listeners={{
         //   tabPress: (e) => {

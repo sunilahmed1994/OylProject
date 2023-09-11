@@ -19,6 +19,7 @@ const LoginScreen = ({ navigation }) => {
   const { login, isLoggedIn, logout } = useContext(AuthContext);
 
   const handleTextPress = () => {
+    setLoading(false);
     navigation.navigate('authNavigation', { screen: 'SignUpScreen' });
   };
 
@@ -32,12 +33,12 @@ const LoginScreen = ({ navigation }) => {
     } else {
       setLoading(true);
       const loginSuccessful = await login(email, password);
+      console.log("login successful", loginSuccessful);
       if (loginSuccessful) {
         navigation.navigate('appNavigation', { screen: 'BottomTab',params:{screen:'HomeScreen'} });
         Alert.alert('Welcome', email);
+        Alert.alert('Error Occured');
         setLoading(false);
-      } else {
-        Alert.alert('Error Occured')
       }
       setLoading(false);
       //  {  login(email, password) ? (navigation.navigate('appNavigation', { screen: 'SetupProfileScreen' }), Alert.alert('Welcome', email),setLoading(false)) : (Alert.alert('Error Occured'));}

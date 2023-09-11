@@ -71,8 +71,9 @@ export const appStyles = StyleSheet.create({
         margin: responsiveHeight(1.5),
         marginLeft: responsiveWidth(5),
         marginRight: responsiveWidth(5),
-        borderBottomWidth:responsiveWidth(0.05),
-        borderRightWidth:responsiveWidth(0.05),
+        borderBottomWidth:0.5,
+        borderRightWidth:0.5,
+        borderColor: '#ccc',
         backgroundColor: '#F7F7F7',
         alignItems:'center'
     },
@@ -123,7 +124,7 @@ export const appStyles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         justifyContent:'space-around',
         alignItems:'center',
-        borderColor: '#FFFFC88C',
+        borderColor: '#FFFFC8',
         borderRightWidth: 1, // Add a border between items
     },
     cardInput: {

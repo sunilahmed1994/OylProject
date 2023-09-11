@@ -7,12 +7,15 @@ import CustomInput from '../../components/customInputField';
 import CustomTouchableText from '../../components/customTextTouchable';
 import CustomButton from '../../components/customButton';
 import AccountModal from '../../components/Modal';
-import { LocationDot,DownIcon, BackgroundBlack } from '../../services/utilities/assets/assets';
+import { LocationDot, DownIcon, BackgroundBlack } from '../../services/utilities/assets/assets';
 
 const locationIcon = LocationDot.locationDot;
 const iconDown = DownIcon.downIcon;
 
 const HomeScreen = ({ navigation }) => {
+  const [selectedOilOption, setSelectedOilOption] = useState('Please select oil type from here                                (All Oil High Quality Synthetic) ');
+  const [locationValue, setLocationValue] = useState('Please enter your address');
+  const [selectedDayData, setSelectedDayData] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [amBackgroundColor, setAmBackgroundColor] = useState('white');
   const [pmBackgroundColor, setPmBackgroundColor] = useState('white');
@@ -34,6 +37,13 @@ const HomeScreen = ({ navigation }) => {
     // ... add more options
   ];
 
+  const handleSelectedOilOption = (option) => {
+    setSelectedOilOption(option);
+  };
+  const handleLocationSubmit = (newLocationValue) => {
+    setLocationValue(newLocationValue);
+    closeModal();
+  };
   const openModal = () => {
     setModalVisible(true);
     <AccountModal isVisible={modalVisible} closeModal={closeModal} />
@@ -49,8 +59,8 @@ const HomeScreen = ({ navigation }) => {
     const numericValue = parseInt(newHours, 10);
 
     // Validate and limit the input
-    const maxHours = 12; // Maximum allowed mileage (7 digits)
-    if (!isNaN(numericValue) && numericValue > 0 && numericValue <= maxHours) {
+    const maxHours = 11; // Maximum allowed mileage (7 digits)
+    if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= maxHours) {
       setHours(numericValue.toString());
     } else {
       setHours('');
@@ -94,6 +104,15 @@ const HomeScreen = ({ navigation }) => {
   const handleDayPress = (item) => {
     // Update the selected day when a day is pressed
     setSelectedDay(item.id);
+
+    setSelectedDayData({
+      // set the selected day here in format of monday 11 september
+      day: item.day,
+      date: item.date,
+      month: item.month,
+
+    });
+    console.log(selectedDayData)
   };
 
   // Generate real-time calendar data
@@ -108,15 +127,15 @@ const HomeScreen = ({ navigation }) => {
     for (let i = currentDayIndex; i < currentDayIndex + daysInMonth; i++) {
       const dayIndex = i - currentDayIndex;
       let day = '';
-     
-      if (dayIndex === 0) {
-        day = 'Today';
-       
-      } else if (dayIndex === 1) {
-        day = 'Tomorrow';
-      } else {
-        day = daysOfWeek[(currentDayIndex + dayIndex) % 7];
-      }
+
+      // if (dayIndex === 0) {
+      //   day = 'Today';
+
+      // } else if (dayIndex === 1) {
+      //   day = 'Tomorrow';
+      // } else {
+      day = daysOfWeek[(currentDayIndex + dayIndex) % 7];
+      // }
 
       const date = currentDate.getDate();
       const month = monthofYears[currentDate.getMonth()]; // Add 1 because months are zero-indexed
@@ -148,7 +167,7 @@ const HomeScreen = ({ navigation }) => {
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={appStyles.flexrow}>
           {data.map((item) => (
-            <TouchableOpacity key={item.id} style={[appStyles.item, item.id === selectedDay && appStyles.selectedDay, ]} onPress={()=> handleDayPress(item)}>
+            <TouchableOpacity key={item.id} style={[appStyles.item, item.id === selectedDay && appStyles.selectedDay,]} onPress={() => handleDayPress(item)}>
               <CustomText style={appStyles.CalendarViews_text}>{item.day}</CustomText>
               <CustomText style={appStyles.CalendarViews_text}>{item.date}</CustomText>
               <CustomText style={appStyles.CalendarViews_text}>{item.month}</CustomText>
@@ -188,10 +207,10 @@ const HomeScreen = ({ navigation }) => {
             />
           </View>
           <View style={[appStyles.marginleft, appStyles.margintop2]}>
-            <View style={[appStyles.am, appStyles.alignitemcenter, appStyles.spacearound,{ backgroundColor: amBackgroundColor }]}>
+            <View style={[appStyles.am, appStyles.alignitemcenter, appStyles.spacearound, { backgroundColor: amBackgroundColor }]}>
               <CustomTouchableText text='AM' style={[appStyles.fontsize2, appStyles.textColorBlack]} onPress={handleAmPress} />
             </View>
-            <View style={[appStyles.pm, appStyles.alignitemcenter, appStyles.spacearound,{ backgroundColor: pmBackgroundColor }]}>
+            <View style={[appStyles.pm, appStyles.alignitemcenter, appStyles.spacearound, { backgroundColor: pmBackgroundColor }]}>
               <CustomTouchableText text='PM' style={[appStyles.fontsize2, appStyles.textColorBlack]} onPress={handlePmPress} />
             </View>
           </View>
@@ -204,10 +223,18 @@ const HomeScreen = ({ navigation }) => {
             source={locationIcon}
             toggleImagePress={locationIconPress}
             label="Enter Location"
-            value='Please enter your address'
+            value={locationValue}
             onChangeText={null}
           />
-          {location && <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} locationModal={true}  transparent={true} />}
+          {location && <AccountModal
+            isVisible={modalVisible}
+            closeModal={closeModal}
+            navigation={navigation}
+            locationModal={true}
+            transparent={true}
+            locationValue={locationValue}
+            onLocationSubmit={handleLocationSubmit} // Pass the callback function
+          />}
         </View>
         <View >
           <CustomInput
@@ -217,10 +244,19 @@ const HomeScreen = ({ navigation }) => {
             source={iconDown}
             toggleImagePress={downIconPress}
             label="Oil type"
-            value='Please select oil type from here                                (All Oil High Quality Synthetic) '
+            value={selectedOilOption}
             onChangeText={null}
           />
-          {oil && <AccountModal isVisible={modalVisible} closeModal={closeModal} navigation={navigation} oilModal={true} locationModal={false} transparent={true} oilOption={oilOption} />}
+          {oil && <AccountModal
+            isVisible={modalVisible}
+            closeModal={closeModal}
+            navigation={navigation}
+            oilModal={true}
+            locationModal={false}
+            transparent={true}
+            oilOption={oilOption}
+            onOilOptionSelect={handleSelectedOilOption}
+          />}
         </View>
         <View style={appStyles.touchableButtonContainer}>
           <CustomButton text="Lock it in!" onPress={handleButtonPress} gradientWhite={true} styletouchableContainer={appStyles.touchableButton} styleGradientContainer={appStyles.gradientContainer} />

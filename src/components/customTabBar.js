@@ -32,7 +32,7 @@ const CustomTabBar = ({ navigation,homeWhite,homeBlack, accountWhite, accountBla
             <View style={[appStyles.alignitemcenter,appStyles.spacearound,appStyles.flexone]}>
                 <TouchableOpacity onPress={accountIconPress}>
                     <Image source={accountWhite} style={{width:responsiveWidth(7),height:responsiveWidth(7)}}/>
-                    <CustomText style={[appStyles.marginTop1,appStyles.textColorWhite]}>{'Account'}</CustomText>
+                    <CustomText style={[appStyles.marginTop1,appStyles.textColorWhite,{marginLeft:responsiveWidth(-2)}]}>{'Account'}</CustomText>
                 </TouchableOpacity>
             </View>
             
@@ -51,7 +51,7 @@ const CustomTabBar = ({ navigation,homeWhite,homeBlack, accountWhite, accountBla
             <View style={[appStyles.alignitemcenter,appStyles.spacearound,appStyles.flexone]}>
                 <TouchableOpacity onPress={accountIconPress}>
                     <Image source={accountBlack} style={{width:responsiveWidth(7),height:responsiveWidth(7)}}/>
-                    <CustomText style={[appStyles.marginTop1,appStyles.textColorBlack]}>{'Account'}</CustomText>
+                    <CustomText style={[appStyles.marginTop1,appStyles.textColorBlack,{marginLeft:responsiveWidth(-2)}]}>{'Account'}</CustomText>
                 </TouchableOpacity>
             </View>
             
