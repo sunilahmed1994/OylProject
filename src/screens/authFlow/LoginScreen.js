@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
   const [existingUsers, setExistingUsers] = useState([]); // To store existing user data
   const [userExists, setUserExists] = useState(false);
   const [isLoading, setLoading] = useState(false); // Add isLoading state
-  const { login, isLoggedIn, logout } = useContext(AuthContext);
+  const { login, isLoggedIn, logout,user } = useContext(AuthContext);
 
   const handleTextPress = () => {
     setLoading(false);
@@ -32,17 +32,21 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert('Invalid Password', 'Please enter a valid password.');
     } else {
       setLoading(true);
-      const loginSuccessful = await login(email, password);
-      console.log("login successful", loginSuccessful);
-      if (loginSuccessful) {
-        navigation.navigate('appNavigation', { screen: 'BottomTab',params:{screen:'HomeScreen'} });
-        Alert.alert('Welcome', email);
-        Alert.alert('Error Occured');
+     
+        console.log(' Try to Login:');
+        const loginSuccessful = await login(email, password);
+        console.log('Login Successful:', loginSuccessful);
+        if (loginSuccessful) {
+          navigation.navigate('appNavigation', { screen: 'BottomTab', params: { screen: 'HomeScreen' } });
+          Alert.alert('Welcome', email);
+        } else {
+          Alert.alert('Login Error', 'Incorrect email or password.');
+        }
+    
         setLoading(false);
-      }
-      setLoading(false);
+     
+      
       //  {  login(email, password) ? (navigation.navigate('appNavigation', { screen: 'SetupProfileScreen' }), Alert.alert('Welcome', email),setLoading(false)) : (Alert.alert('Error Occured'));}
-
 
     }
 
@@ -70,9 +74,12 @@ const LoginScreen = ({ navigation }) => {
   // };
   useEffect(() => {
     // fetchExistingUsers();
-    logout();
+    if (user) {
+      navigation.navigate('appNavigation', { screen: 'BottomTab', params: { screen: 'HomeScreen' } });
+    }
+    // logout();
     // loadSavedCredentials();
-  }, []);
+  }, [user, navigation]);
   return (
     <View style={appStyles.flexone}>
       <ImageBackground source={BackgroundBlack.backgroundBlack} style={appStyles.backgroundImage} >

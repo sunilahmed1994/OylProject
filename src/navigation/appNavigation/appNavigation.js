@@ -26,7 +26,7 @@ function BottomTab() {
         options={{ headerShown:false,
         tabBarLabel:'Home',
          tabBarIcon:({color,size})=>(
-           <Image source={HomeBlack.homeBlack} style={{ tintColor: 'black', width: responsiveWidth(6), height: responsiveHeight(4) }}/>
+           <Image source={HomeBlack.homeBlack} style={{ tintColor: 'black', width: responsiveWidth(5.5), height: responsiveHeight(3.5) }}/>
          )
         }}/>
 
@@ -36,7 +36,7 @@ function BottomTab() {
         headerShown:false,
         tabBarLabel:'Account',
         tabBarIcon:({color,size})=>(
-          <Image source={AccountBlack.accountBlack} style={{ tintColor: 'black', width: responsiveWidth(6), height: responsiveHeight(4) }}/>
+          <Image source={AccountBlack.accountBlack} style={{ tintColor: 'black', width: responsiveWidth(5.5), height: responsiveHeight(3.5) }}/>
         )
         }} 
         // listeners={{

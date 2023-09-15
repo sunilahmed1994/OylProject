@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
           try {
             console.log('login method called');
             const userCredential = await auth().signInWithEmailAndPassword(email, password);
+            console.log(userCredential);
             // Check if the userCredential contains a user
             if (userCredential.user) {
               setUser(userCredential.user); // Set the user in context

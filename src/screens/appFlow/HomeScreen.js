@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { appStyles } from '../../services/utilities/appstyle';
 import CustomText from '../../components/customText';
 import CustomInput from '../../components/customInputField';
@@ -8,11 +8,14 @@ import CustomTouchableText from '../../components/customTextTouchable';
 import CustomButton from '../../components/customButton';
 import AccountModal from '../../components/Modal';
 import { LocationDot, DownIcon, BackgroundBlack } from '../../services/utilities/assets/assets';
+import { firebase } from '@react-native-firebase/firestore';
+import { AuthContext } from '../../../src/navigation/authProvider';
 
 const locationIcon = LocationDot.locationDot;
 const iconDown = DownIcon.downIcon;
 
 const HomeScreen = ({ navigation }) => {
+  const { user, setUser } = useContext(AuthContext);
   const [selectedOilOption, setSelectedOilOption] = useState('Please select oil type from here                                (All Oil High Quality Synthetic) ');
   const [locationValue, setLocationValue] = useState('Please enter your address');
   const [selectedDayData, setSelectedDayData] = useState(null);
@@ -28,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
   const [oil, setOil] = useState(false);
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+
   const oilOption = [
     { id: '1', text: '0W-20', },
     { id: '2', text: '5W-20', },
@@ -37,6 +41,35 @@ const HomeScreen = ({ navigation }) => {
     // ... add more options
   ];
 
+  const addBookingDataToFirestore = async () => {
+    const database = firebase.firestore();
+    
+    if (selectedDayData && hours && minutes && selectedOption && locationValue && selectedOilOption) {
+      console.log('user is', user.uid);
+      database.collection('users')
+      .doc(user.uid)
+      .collection('Booking')
+      .add({
+        selectedDayData,
+        hours,
+        minutes,
+        selectedOption,
+        locationValue,
+        selectedOilOption,
+      })
+      .then(() => {
+        console.log('Booking successfully Done!');
+        navigation.navigate('appNavigation', { screen: 'VehicleInfoScreen' });
+      })
+      .catch((error) => {
+        console.log('Error adding data: ', error); // Log Firestore error
+        // Handle the error here, you can add an Alert or other error handling logic.
+      });
+    } else {
+
+      console.log('Not all required fields are updated.');
+    }
+  };
   const handleSelectedOilOption = (option) => {
     setSelectedOilOption(option);
   };
@@ -86,7 +119,8 @@ const HomeScreen = ({ navigation }) => {
     setOil(true);
   };
   const handleButtonPress = () => {
-    navigation.navigate('appNavigation', { screen: 'VehicleInfoScreen' })
+    //  navigation.navigate('appNavigation', { screen: 'VehicleInfoScreen' })
+    addBookingDataToFirestore();
   };
 
   const handleMinutesChange = (newMinutes) => {
@@ -105,14 +139,16 @@ const HomeScreen = ({ navigation }) => {
     // Update the selected day when a day is pressed
     setSelectedDay(item.id);
 
+    // Find the selected day data in your data array
+    const selectedData = data.find((dataItem) => dataItem.id === item.id);
     setSelectedDayData({
       // set the selected day here in format of monday 11 september
-      day: item.day,
-      date: item.date,
-      month: item.month,
-
+      day: selectedData.day,
+      date: selectedData.date,
+      month: selectedData.month,
     });
-    console.log(selectedDayData)
+    console.log("Selected Day Data :", selectedDayData)
+
   };
 
   // Generate real-time calendar data
@@ -151,6 +187,17 @@ const HomeScreen = ({ navigation }) => {
   // Call the data generation function once when the component mounts
   useEffect(() => {
     generateCalendarData();
+    const unsubscribe = firebase.auth().onAuthStateChanged((authenticatedUser) => {
+      if (authenticatedUser) {
+        // User is signed in, set the user in your context
+        setUser(authenticatedUser);
+      } else {
+        // User is signed out, clear the user in your context
+        setUser(null);
+      }
+    });
+
+    return unsubscribe; // Cleanup the listener when component unmounts
   }, []);
 
   return (
