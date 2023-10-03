@@ -1,8 +1,8 @@
 import React ,{ useState, useEffect , useContext} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AppNavigation from './appNavigation/appNavigation';
-import AuthNavigation from './authNavigation/authNavigation';
+import AppNavigation from './appNavigation';
+import AuthNavigation from './authNavigation';
 import { AuthContext } from './authProvider';
 import auth from '@react-native-firebase/auth';
 

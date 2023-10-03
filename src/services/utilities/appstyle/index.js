@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions"
+import { fontFamily } from '../fonts'
 
 
 export const appStyles = StyleSheet.create({
@@ -167,14 +168,14 @@ export const appStyles = StyleSheet.create({
     touchableButtonText: {
         color: '#000000',
         fontSize: responsiveFontSize(2),
-        fontFamily: 'Roboto',
+        fontFamily: fontFamily.appTextRegular,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     touchableBlackButtonText: {
         color: '#FFFFFF',
         fontSize: responsiveFontSize(2),
-        fontFamily: 'Roboto',
+        fontFamily: fontFamily.appTextRegular,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -473,7 +474,7 @@ export const appStyles = StyleSheet.create({
       backgroundColor: '#FFFFFF'
     },
     CalendarViews_text: {
-      fontFamily: 'Roboto',
+      fontFamily: fontFamily.appTextBold,
       fontWeight: 'bold',
       margin: responsiveHeight(0.5),
       color: '#444444'
