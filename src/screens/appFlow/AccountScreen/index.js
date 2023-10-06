@@ -4,11 +4,13 @@ import { appStyles } from '../../../services/utilities/appstyle';
 import CustomButton from '../../../components/customButton';
 import AccountModal from '../../../components/Modal';
 import { RightIcon, AccountBlack } from '../../../services/utilities/assets';
+import { firebase} from '@react-native-firebase/firestore'; // Import Firestore
+import {storage} from '@react-native-firebase/storage'; // Import Storage
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const AccountScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const user = firebase.auth().currentUser; // Get the authenticated user
   const imagesource = RightIcon.rightIcon;
   const accountblack = AccountBlack.accountBlack;
 
@@ -22,14 +24,16 @@ const AccountScreen = ({ navigation }) => {
       },
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, async (response) => {
       if (response && response.assets && response.assets.length > 0) {
-        setImageSource(response.assets[0].uri)
+        const imageUri = response.assets[0].uri;
+  
+        setImageSource(imageUri);
       } else {
         // Handle the case where the user canceled without selecting an image
         Alert.alert("User did not select an image.");
       }
-    })
+    });
   }
 
 
